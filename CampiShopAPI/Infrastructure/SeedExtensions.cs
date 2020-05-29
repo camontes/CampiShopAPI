@@ -18,11 +18,41 @@ namespace CampiShopAPI.Infrastructure
             }
         };
 
-        public static void Seed(this ModelBuilder modelBuilder)
+		public static readonly StateOrder[] StateOrdersSeed = new StateOrder[] {
+			new StateOrder
+			{
+				Id = 1,
+				Name = "En proceso"
+			},
+			new StateOrder
+			{
+				Id = 2,
+				Name = "Pendiente"
+			},
+			new StateOrder
+			{
+				Id = 3,
+				Name = "Recibido"
+			},
+			new StateOrder
+			{
+				Id = 4,
+				Name = "Despachado"
+			},
+			new StateOrder
+			{
+				Id = 5,
+				Name = "Entregado"
+			}
+		};
+		public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
                UsersSeed
             );
-        }
+			modelBuilder.Entity<StateOrder>().HasData(
+			   StateOrdersSeed
+			);
+		}
     }
 }

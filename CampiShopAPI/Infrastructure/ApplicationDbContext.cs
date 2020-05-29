@@ -13,6 +13,15 @@ namespace CampiShopAPI.Infrastructure
 
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<DetailOrder> DetailOrders { get; set; }
+        public DbSet<DetailSpecification> DetailSpecifications { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<Specification> Specifications { get; set; }
+        public DbSet<StateOrder> StateOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
