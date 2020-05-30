@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CampiShopAPI
+namespace CampiShopAPI.Mappings
 {
-    public class UserMappings : Profile
+    public class CategoryMappings : Profile
     {
-        public UserMappings()
+        public CategoryMappings()
         {
-            CreateMap<CreateUserCommand, User>();
+            CreateMap<CreateCategoryCommand, Category>();
+            CreateMap<UpdateCategoryCommand, Category>();
         }
     }
 }

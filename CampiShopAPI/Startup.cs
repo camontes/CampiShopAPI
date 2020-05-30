@@ -44,10 +44,20 @@ namespace CampiShopAPI
             // Add Automapper
             services.AddAutoMapper(typeof(Startup));
 
-            /// User
+            // User
             services.AddScoped<IUserBehavior, UserBehavior>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserQueries, UserQueries>();
+
+            // Category
+            services.AddScoped<ICategoryQueries, CategoryQueries>();
+            services.AddScoped<ICategoryBehavior, CategoryBehavior>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            // Specification
+            services.AddScoped<ISpecificationQueries, SpecificationQueries>();
+            services.AddScoped<ISpecificationBehavior, SpecificationBehavior>();
+            services.AddScoped<ISpecificationRepository, SpecificationRepository>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

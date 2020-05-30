@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace CampiShopAPI.Commands
 {
-    public  class CreateUserCommand
+    public class CreateCategoryCommand
     {
         [Required]
-        public string Username { get; set; }
-
         public string Name { get; set; }
 
-        public string Photo { get; set; }
+        [Required]
+        public string Description { get; set; }
     }
 }

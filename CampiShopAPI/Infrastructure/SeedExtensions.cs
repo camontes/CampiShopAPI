@@ -45,6 +45,7 @@ namespace CampiShopAPI.Infrastructure
 				Name = "Entregado"
 			}
 		};
+
 		public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
