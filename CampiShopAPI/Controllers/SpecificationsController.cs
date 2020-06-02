@@ -18,6 +18,7 @@ namespace CampiShopAPI.Controllers
     public class SpecificationsController : ControllerBase
     {
         private readonly ISpecificationQueries _queries;
+        private readonly ICategoryQueries _categoryQueries;
 
         private readonly ISpecificationBehavior _behavior;
 
@@ -26,13 +27,15 @@ namespace CampiShopAPI.Controllers
         public SpecificationsController 
             (
                 ISpecificationQueries queries,
-                ISpecificationBehavior behavior, 
+                ISpecificationBehavior behavior,
+                ICategoryQueries categoryQueries,
                 IMapper mapper
             )
         {
             _queries = queries;
             _mapper = mapper;
             _behavior = behavior;
+            _categoryQueries = categoryQueries;
         }
 
         [HttpGet]
@@ -69,8 +72,15 @@ namespace CampiShopAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<SpecificationViewModel>> CreateSpecificationAsync(CreateSpecificationCommand createSpecificationCommand)
         {
+            var existingCategory = await _categoryQueries.FindByIdAsync(createSpecificationCommand.CategoryId);
+
+            if (existingCategory == null) {
+                return NotFound();
+            }
+
             var specification = _mapper.Map<Specification>(createSpecificationCommand);
 
             await _behavior.CreateSpecificationAsync(specification);
@@ -86,8 +96,9 @@ namespace CampiShopAPI.Controllers
         public async Task<ActionResult<SpecificationViewModel>> UpdateSpecificationAsync(int id, UpdateSpecificationCommand updateSpecificationCommand)
         {
             var existingSpecificationViewModel = await _queries.FindByIdAsync(id);
+            var existingCategory = await _categoryQueries.FindByIdAsync(updateSpecificationCommand.CategoryId);
 
-            if (existingSpecificationViewModel == null)
+            if (existingSpecificationViewModel == null || existingCategory == null)
             {
                 return NotFound();
             }

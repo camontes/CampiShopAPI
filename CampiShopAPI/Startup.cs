@@ -59,6 +59,11 @@ namespace CampiShopAPI
             services.AddScoped<ISpecificationBehavior, SpecificationBehavior>();
             services.AddScoped<ISpecificationRepository, SpecificationRepository>();
 
+            // DetailSpecification
+            services.AddScoped<IDetailSpecificationQueries, DetailSpecificationQueries>();
+            services.AddScoped<IDetailSpecificationBehavior, DetailSpecificationBehavior>();
+            services.AddScoped<IDetailSpecificationRepository, DetailSpecificationRepository>();
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
