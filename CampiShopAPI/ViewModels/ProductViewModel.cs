@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CampiShopAPI.Domain.Models
+namespace CampiShopAPI.ViewModels
 {
-    public class Product
+    public class ProductViewModel
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
@@ -18,8 +16,5 @@ namespace CampiShopAPI.Domain.Models
         public string Photo { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdateddAt { get; set; }
-        public virtual IEnumerable<DetailOrder> DetailOrder { get; set; }
-        public virtual IEnumerable<ShoppingCart> ShoppingCart { get; set; }
-        public virtual IEnumerable<ProductSpecification> ProductSpecification { get; set; }
     }
 }
