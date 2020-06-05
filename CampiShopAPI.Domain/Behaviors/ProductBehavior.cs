@@ -23,7 +23,7 @@ namespace CampiShopAPI.Domain.Behaviors
             if (product is null) throw new ArgumentNullException(nameof(product));
 
             product.CreatedAt = DateTime.Now;
-            product.UpdateddAt = DateTime.Now;
+            product.UpdatedAt = DateTime.Now;
 
             await _repository.CreateProductAsync(product);
         }
@@ -32,6 +32,7 @@ namespace CampiShopAPI.Domain.Behaviors
         {
             if (product is null) throw new ArgumentNullException(nameof(product));
 
+            product.UpdatedAt = DateTime.Now;
 
             await _repository.UpdateProductAsync(product);
         }

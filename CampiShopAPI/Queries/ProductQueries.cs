@@ -32,7 +32,7 @@ namespace CampiShopAPI.Queries
                      Color = p.Color,
                      Photo = p.Photo,
                      CreatedAt = p.CreatedAt,
-                     UpdateddAt = p.UpdateddAt
+                     UpdatedAt = p.UpdatedAt
                  })
                 .ToListAsync();
         }
@@ -50,7 +50,7 @@ namespace CampiShopAPI.Queries
                     Color = p.Color,
                     Photo = p.Photo,
                     CreatedAt = p.CreatedAt,
-                    UpdateddAt = p.UpdateddAt
+                    UpdatedAt = p.UpdatedAt
                 })
                 .FirstOrDefaultAsync(product => product.Id == id);
         }

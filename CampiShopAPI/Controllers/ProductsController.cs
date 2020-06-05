@@ -106,5 +106,43 @@ namespace CampiShopAPI.Controllers
 
             return productViewModel;
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ProductViewModel>> UpdateProductAsync(int id, UpdateProductCommand updateProductCommand)
+        {
+            var existingProductViewModel = await _queries.FindByIdAsync(id);
+
+            if (existingProductViewModel == null)
+            {
+                return NotFound();
+            }
+
+            Product product = _mapper.Map<Product>(existingProductViewModel);
+            _mapper.Map(updateProductCommand, product);
+            await _behavior.UpdateProductAsync(product);
+
+            var productViewModel = await _queries.FindByIdAsync(product.Id);
+
+            return productViewModel;
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteProductAsync(int id)
+        {
+            var existingProduct = await _queries.FindByIdAsync(id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            var product = _mapper.Map<Product>(existingProduct);
+            await _behavior.DeleteProductAsync(product);
+
+            return NoContent();
+        }
     }
 }

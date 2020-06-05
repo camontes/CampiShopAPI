@@ -15,7 +15,7 @@ namespace CampiShopAPI.Mappings
         {
             CreateMap<CreateSpecificationCommand, Specification>();
             CreateMap<SpecificationViewModel, Specification>();
-            CreateMap<UpdateSpecificationCommand, SpecificationViewModel>();
+            CreateMap<UpdateSpecificationCommand, Specification>();
         }
     }
 }

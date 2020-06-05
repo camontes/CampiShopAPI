@@ -103,13 +103,15 @@ namespace CampiShopAPI.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(updateSpecificationCommand, existingSpecificationViewModel);
-
             var specification = _mapper.Map<Specification>(existingSpecificationViewModel);
+
+            _mapper.Map(updateSpecificationCommand, specification);
 
             await _behavior.UpdateSpecificationAsync(specification);
 
-            return existingSpecificationViewModel;
+            var specificationViewModel = await _queries.FindByIdAsync(specification.Id);
+
+            return specificationViewModel;
         }
 
         [HttpDelete("{id}")]

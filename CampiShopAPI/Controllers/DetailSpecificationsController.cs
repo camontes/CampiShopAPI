@@ -101,13 +101,15 @@ namespace CampiShopAPI.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(updateDetailSpecificationCommand, existingDetailSpecificationViewModel);
-
             var detailSpecification = _mapper.Map<DetailSpecification>(existingDetailSpecificationViewModel);
+
+            _mapper.Map(updateDetailSpecificationCommand, detailSpecification);
 
             await _behavior.UpdateDetailSpecificationAsync(detailSpecification);
 
-            return existingDetailSpecificationViewModel;
+            var detailSpecificationViewModel = await _queries.FindByIdAsync(detailSpecification.Id);
+
+            return detailSpecificationViewModel;
         }
 
 

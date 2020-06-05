@@ -17,7 +17,7 @@ namespace CampiShopAPI.Domain.Models
         public string Color { get; set; }
         public string Photo { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdateddAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public virtual IEnumerable<DetailOrder> DetailOrder { get; set; }
         public virtual IEnumerable<ShoppingCart> ShoppingCart { get; set; }
         public virtual IEnumerable<ProductSpecification> ProductSpecification { get; set; }

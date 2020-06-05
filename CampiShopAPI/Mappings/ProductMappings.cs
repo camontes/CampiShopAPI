@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CampiShopAPI.Commands.Products;
 using CampiShopAPI.Domain.Models;
+using CampiShopAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace CampiShopAPI.Mappings
         public ProductMappings()
         {
             CreateMap<CreateProductCommand, Product>();
+            CreateMap<ProductViewModel, Product>();
+            CreateMap<UpdateProductCommand, Product>();
         }
     }
 }
