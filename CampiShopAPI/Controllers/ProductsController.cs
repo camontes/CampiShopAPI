@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CampiShopAPI.Commands.Products;
+using CampiShopAPI.Commands.ShoppingCarts;
 using CampiShopAPI.Domain.Behaviors.Interfaces;
 using CampiShopAPI.Domain.Models;
 using CampiShopAPI.Queries.Interfaces;
@@ -18,8 +19,11 @@ namespace CampiShopAPI.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductQueries _queries;
+        private readonly IUserQueries _userQueries;
+        private readonly IShoppingCartQueries _shoppingCartQueries;
         private readonly IDetailSpecificationQueries _detailSpecificationQueries;
         private readonly IProductBehavior _behavior;
+        private readonly IShoppingCartBehavior _shoppingCartBehavior;
         private readonly IProductSpecificationBehavior _productSpecificationbehavior;
         private readonly IMapper _mapper;
 
@@ -28,15 +32,21 @@ namespace CampiShopAPI.Controllers
                 IProductQueries queries,
                 IProductBehavior behavior,
                 IProductSpecificationBehavior productSpecificationBehavior,
+                IShoppingCartQueries shoppingCartQueries,
                 IDetailSpecificationQueries detailSpecificationQueries,
+                IShoppingCartBehavior shoppingCartBehavior,
+                IUserQueries userQueries,
                 IMapper mapper
            )
         {
             _queries = queries;
             _mapper = mapper;
             _behavior = behavior;
+            _userQueries = userQueries;
             _productSpecificationbehavior = productSpecificationBehavior;
             _detailSpecificationQueries = detailSpecificationQueries;
+            _shoppingCartBehavior = shoppingCartBehavior;
+            _shoppingCartQueries = shoppingCartQueries;
 
         }
 
@@ -105,6 +115,28 @@ namespace CampiShopAPI.Controllers
             var productViewModel = await _queries.FindByIdAsync(product.Id);
 
             return productViewModel;
+        }
+
+        [Route("AddProductShoppingCart")]
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ShoppingCartViewModel>> AddProductShoppingCartAsync(CreateShoppingCartCommand createShoppingCartCommand)
+        {
+            var existingProduct = await _queries.FindByIdAsync(createShoppingCartCommand.ProductId);
+            var existingUser = await _userQueries.FindByUsernameAsync(createShoppingCartCommand.Username);
+
+            if (existingProduct == null || existingUser == null) return NotFound();
+
+            var shoppingCart = _mapper.Map<ShoppingCart>(createShoppingCartCommand);
+
+            await _shoppingCartBehavior.CreateShoppingCartAsync(shoppingCart, existingProduct.Price);
+
+            var shoppingCartViewModel = await _shoppingCartQueries.FindByIdAsync(shoppingCart.Id);
+
+            return shoppingCartViewModel;
+
         }
 
         [HttpPut("{id}")]

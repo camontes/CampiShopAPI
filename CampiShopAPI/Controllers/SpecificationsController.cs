@@ -18,6 +18,7 @@ namespace CampiShopAPI.Controllers
     public class SpecificationsController : ControllerBase
     {
         private readonly ISpecificationQueries _queries;
+
         private readonly ICategoryQueries _categoryQueries;
 
         private readonly ISpecificationBehavior _behavior;

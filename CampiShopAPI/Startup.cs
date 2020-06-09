@@ -72,6 +72,12 @@ namespace CampiShopAPI
             // ProductDetail
             services.AddScoped<IProductSpecificationBehavior, ProductSpecificationBehavior>();
             services.AddScoped<IProductSpecificationRepository, ProductSpecificationRepository>();
+            services.AddScoped<IProductSpecificationQueries, ProductSpecificationQueries>();
+
+            // ShoppingCart
+            services.AddScoped<IShoppingCartBehavior, ShoppingCartBehavior>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IShoppingCartQueries, ShoppingCartQueries>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
