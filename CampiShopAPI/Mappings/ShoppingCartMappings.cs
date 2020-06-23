@@ -13,7 +13,7 @@ namespace CampiShopAPI.Mappings
     {
         public ShoppingCartMappings ()
         {
-            CreateMap<CreateShoppingCartCommand, ShoppingCart>();
+            CreateMap<ShoppingCartCommand, ShoppingCart>();
         }
     }
 }

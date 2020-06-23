@@ -9,5 +9,6 @@ namespace CampiShopAPI.Domain.Repositories
     public interface IShoppingCartRepository
     {
         Task CreateShoppingCartAsync(ShoppingCart shoppingCart);
+        Task UpdateShoppingCartAsync(ShoppingCart shoppingCart);
     }
 }

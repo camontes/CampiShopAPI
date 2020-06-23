@@ -21,5 +21,11 @@ namespace CampiShopAPI.Infrastructure.Repositories
             _context.ShoppingCarts.Add(shoppingCart);
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateShoppingCartAsync(ShoppingCart shoppingCart)
+        {
+            _context.ShoppingCarts.Update(shoppingCart);
+            await _context.SaveChangesAsync();
+        }
     }
 }

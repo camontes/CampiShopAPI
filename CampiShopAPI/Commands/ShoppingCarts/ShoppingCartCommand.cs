@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CampiShopAPI.Commands.ShoppingCarts
 {
-    public class CreateShoppingCartCommand
+    public class ShoppingCartCommand
     {
         public int Amount { get; set; }
         public int ProductId { get; set; }

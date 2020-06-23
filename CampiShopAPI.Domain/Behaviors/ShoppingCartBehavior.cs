@@ -25,5 +25,14 @@ namespace CampiShopAPI.Domain.Behaviors
 
             await _repository.CreateShoppingCartAsync(shoppingCart);
         }
+
+        public async Task UpdateShoppingCartAsync(ShoppingCart shoppingCart, double price)
+        {
+            if (shoppingCart is null) throw new ArgumentNullException(nameof(shoppingCart));
+
+            shoppingCart.Total = shoppingCart.Amount * price;
+
+            await _repository.UpdateShoppingCartAsync(shoppingCart);
+        }
     }
 }
