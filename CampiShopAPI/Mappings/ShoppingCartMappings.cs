@@ -2,6 +2,7 @@
 using CampiShopAPI.Commands.Products;
 using CampiShopAPI.Commands.ShoppingCarts;
 using CampiShopAPI.Domain.Models;
+using CampiShopAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace CampiShopAPI.Mappings
         public ShoppingCartMappings ()
         {
             CreateMap<ShoppingCartCommand, ShoppingCart>();
+            CreateMap<ShoppingCartViewModel, ShoppingCart>();
+            CreateMap<UpdateShoppingCartCommand, ShoppingCart>();
         }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CampiShopAPI.Commands.ShoppingCarts;
+using CampiShopAPI.Domain.Behaviors.Interfaces;
+using CampiShopAPI.Domain.Models;
 using CampiShopAPI.Queries.Interfaces;
 using CampiShopAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -16,11 +19,13 @@ namespace CampiShopAPI.Controllers
     {
         private readonly IShoppingCartQueries _queries;
         private readonly IUserQueries _userQueries;
+        private readonly IShoppingCartBehavior _behavior;
         private readonly IMapper _mapper;
 
         public ShoppingCartsController
             (
              IShoppingCartQueries queries,
+             IShoppingCartBehavior behavior,
              IUserQueries userQueries,
              IMapper mapper
             )
@@ -28,6 +33,7 @@ namespace CampiShopAPI.Controllers
             _mapper = mapper;
             _queries = queries;
             _userQueries = userQueries;
+            _behavior = behavior;
         }
 
         [HttpGet]
@@ -66,6 +72,27 @@ namespace CampiShopAPI.Controllers
             }
 
             return await _queries.FindAllByUsernameAsync(username);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ShoppingCartViewModel>> UpdateShoppingCartAsync(int id, UpdateShoppingCartCommand updateShoppingCartCommand)
+        {
+            var existingShoppingCartViewModel = await _queries.FindByIdAsync(id);
+
+            if (existingShoppingCartViewModel == null)
+            {
+                return NotFound();
+            }
+
+            ShoppingCart shoppingCart = _mapper.Map<ShoppingCart>(existingShoppingCartViewModel);
+            _mapper.Map(updateShoppingCartCommand, shoppingCart);
+            await _behavior.UpdateShoppingCartAsync(shoppingCart, existingShoppingCartViewModel.PriceProduct);
+
+            var shoppingCartViewModel = await _queries.FindByIdAsync(id);
+
+            return shoppingCartViewModel;
         }
     }
 }

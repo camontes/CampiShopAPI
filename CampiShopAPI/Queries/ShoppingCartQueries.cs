@@ -27,6 +27,7 @@ namespace CampiShopAPI.Queries
                      Id = sc.Id,
                      Amount = sc.Amount,
                      Total = sc.Total,
+                     PriceProduct = sc.Product.Price,
                      ProductId = sc.ProductId,
                      ProductName = sc.Product.Name,
                      Username = sc.Username
@@ -43,6 +44,7 @@ namespace CampiShopAPI.Queries
                     Id = sc.Id,
                     Amount = sc.Amount,
                     Total = sc.Total,
+                    PriceProduct = sc.Product.Price,
                     ProductId = sc.ProductId,
                     ProductName = sc.Product.Name,
                     Username = sc.Username
@@ -60,6 +62,7 @@ namespace CampiShopAPI.Queries
                     Amount = sc.Amount,
                     Total = sc.Total,
                     ProductId = sc.ProductId,
+                    PriceProduct = sc.Product.Price,
                     ProductName = sc.Product.Name,
                     Username = sc.Username
                 })

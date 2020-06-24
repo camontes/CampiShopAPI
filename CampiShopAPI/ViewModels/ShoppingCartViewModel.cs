@@ -13,5 +13,6 @@ namespace CampiShopAPI.ViewModels
         public int ProductId { get; set; }
         public string Username { get; set; }
         public string ProductName { get; set; }
+        public double PriceProduct { get; set; }
     }
 }
