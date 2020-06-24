@@ -122,12 +122,20 @@ namespace CampiShopAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
         public async Task<ActionResult<ShoppingCartViewModel>> AddProductShoppingCartAsync(ShoppingCartCommand shoppingCartCommand)
         {
             var existingProduct = await _queries.FindByIdAsync(shoppingCartCommand.ProductId);
             var existingUser = await _userQueries.FindByUsernameAsync(shoppingCartCommand.Username);
 
             if (existingProduct == null || existingUser == null) return NotFound();
+
+            var existingProductInShoppingCart = await _shoppingCartQueries.FindByIdUsernameAsync(shoppingCartCommand.ProductId, shoppingCartCommand.Username);
+
+            if (existingProductInShoppingCart != null)
+            {
+                return Conflict();
+            }
 
             var shoppingCart = _mapper.Map<ShoppingCart>(shoppingCartCommand);
 

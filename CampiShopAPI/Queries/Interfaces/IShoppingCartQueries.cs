@@ -10,6 +10,7 @@ namespace CampiShopAPI.Queries.Interfaces
     {
         Task<List<ShoppingCartViewModel>> FindAllAsync();
         Task<ShoppingCartViewModel> FindByIdAsync(int id);
+        Task<ShoppingCartViewModel> FindByIdUsernameAsync(int productId, string username);
         Task <List<ShoppingCartViewModel>> FindAllByUsernameAsync(string username);
     }
 }
