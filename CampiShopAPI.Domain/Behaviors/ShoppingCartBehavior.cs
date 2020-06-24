@@ -21,8 +21,7 @@ namespace CampiShopAPI.Domain.Behaviors
         {
             if (shoppingCart is null) throw new ArgumentNullException(nameof(shoppingCart));
 
-            shoppingCart.Amount = 1;
-            shoppingCart.Total = shoppingCart.Amount * price;
+            shoppingCart.Total = 1 * price;
 
             await _repository.CreateShoppingCartAsync(shoppingCart);
         }
