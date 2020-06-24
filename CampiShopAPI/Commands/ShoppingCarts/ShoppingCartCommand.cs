@@ -7,7 +7,6 @@ namespace CampiShopAPI.Commands.ShoppingCarts
 {
     public class ShoppingCartCommand
     {
-        public int Amount { get; set; }
         public int ProductId { get; set; }
         public string Username { get; set; }
     }

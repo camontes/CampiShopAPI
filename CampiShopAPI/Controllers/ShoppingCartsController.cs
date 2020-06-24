@@ -15,16 +15,19 @@ namespace CampiShopAPI.Controllers
     public class ShoppingCartsController : ControllerBase
     {
         private readonly IShoppingCartQueries _queries;
+        private readonly IUserQueries _userQueries;
         private readonly IMapper _mapper;
 
         public ShoppingCartsController
             (
              IShoppingCartQueries queries,
+             IUserQueries userQueries,
              IMapper mapper
             )
         {
             _mapper = mapper;
             _queries = queries;
+            _userQueries = userQueries;
         }
 
         [HttpGet]
@@ -47,6 +50,22 @@ namespace CampiShopAPI.Controllers
             }
 
             return existingShopingCart;
+        }
+
+        [Route("GetByUsername/{username}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<ShoppingCartViewModel>>> GetByUsernameAsync(string username)
+        {
+            var existingUser = await _userQueries.FindByUsernameAsync(username);
+
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            return await _queries.FindAllByUsernameAsync(username);
         }
     }
 }
