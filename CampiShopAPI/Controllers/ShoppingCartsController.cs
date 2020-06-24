@@ -94,5 +94,23 @@ namespace CampiShopAPI.Controllers
 
             return shoppingCartViewModel;
         }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteShoppingCartAsync(int id)
+        {
+            var existingShoppingCart = await _queries.FindByIdAsync(id);
+            if (existingShoppingCart == null)
+            {
+                return NotFound();
+            }
+
+            var shoppingCart = _mapper.Map<ShoppingCart>(existingShoppingCart);
+            await _behavior.DeleteShoppingCartAsync(shoppingCart);
+
+            return NoContent();
+        }
     }
 }

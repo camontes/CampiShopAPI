@@ -10,5 +10,6 @@ namespace CampiShopAPI.Domain.Repositories
     {
         Task CreateShoppingCartAsync(ShoppingCart shoppingCart);
         Task UpdateShoppingCartAsync(ShoppingCart shoppingCart);
+        Task DeleteShoppingCartAsync(ShoppingCart shoppingCart);
     }
 }

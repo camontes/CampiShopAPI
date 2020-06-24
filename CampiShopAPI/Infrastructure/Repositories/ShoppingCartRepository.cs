@@ -27,5 +27,10 @@ namespace CampiShopAPI.Infrastructure.Repositories
             _context.ShoppingCarts.Update(shoppingCart);
             await _context.SaveChangesAsync();
         }
+        public async Task DeleteShoppingCartAsync(ShoppingCart shoppingCart)
+        {
+            _context.ShoppingCarts.Remove(shoppingCart);
+            await _context.SaveChangesAsync();
+        }
     }
 }

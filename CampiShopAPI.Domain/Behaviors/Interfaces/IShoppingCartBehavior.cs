@@ -10,5 +10,6 @@ namespace CampiShopAPI.Domain.Behaviors.Interfaces
     {
         Task CreateShoppingCartAsync(ShoppingCart shoppingCart, double price);
         Task UpdateShoppingCartAsync(ShoppingCart shoppingCart, double price);
+        Task DeleteShoppingCartAsync(ShoppingCart shoppingCart);
     }
 }
