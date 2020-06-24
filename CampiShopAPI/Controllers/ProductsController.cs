@@ -129,8 +129,6 @@ namespace CampiShopAPI.Controllers
 
             if (existingProduct == null || existingUser == null) return NotFound();
 
-            if (existingProduct.Amount < shoppingCartCommand.Amount) return BadRequest();
-
             var shoppingCart = _mapper.Map<ShoppingCart>(shoppingCartCommand);
 
             await _shoppingCartBehavior.CreateShoppingCartAsync(shoppingCart, existingProduct.Price);

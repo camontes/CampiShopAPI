@@ -49,5 +49,22 @@ namespace CampiShopAPI.Queries
                 })
                 .FirstOrDefaultAsync(shoppingCart => shoppingCart.Id == id);
         }
+
+        public async Task<List<ShoppingCartViewModel>> FindAllByUsernameAsync(string username)
+        {
+            return await _context.ShoppingCarts.AsNoTracking()
+                .Include(p => p.Product)
+                .Select(sc => new ShoppingCartViewModel
+                {
+                    Id = sc.Id,
+                    Amount = sc.Amount,
+                    Total = sc.Total,
+                    ProductId = sc.ProductId,
+                    ProductName = sc.Product.Name,
+                    Username = sc.Username
+                })
+                .Where(shoppingCart => shoppingCart.Username ==username)
+                .ToListAsync();
+        }
     }
 }
