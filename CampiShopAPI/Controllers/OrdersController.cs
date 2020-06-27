@@ -6,6 +6,7 @@ using AutoMapper;
 using CampiShopAPI.Commands.Orders;
 using CampiShopAPI.Domain.Behaviors.Interfaces;
 using CampiShopAPI.Domain.Models;
+using CampiShopAPI.Infrastructure;
 using CampiShopAPI.Queries.Interfaces;
 using CampiShopAPI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,13 @@ namespace CampiShopAPI.Controllers
 
         private readonly IStateOrderQueries _stateOrderQueries;
 
+        private readonly IProductQueries _productQueries;
+
         private readonly IDetailOrderBehavior _detailOrderBehavior;
+
+        private readonly IShoppingCartBehavior _shoppingCartBehavior;
+
+        private readonly IProductBehavior _productBehavior;
 
         private readonly IMapper _mapper;
 
@@ -36,8 +43,11 @@ namespace CampiShopAPI.Controllers
                 IShoppingCartQueries shoppingCartQueries,
                 IUserQueries userQueries,
                 IStateOrderQueries stateOrderQueries,
+                IProductQueries productQueries,
                 IOrderBehavior behavior,
                 IDetailOrderBehavior detailOrderBehavior,
+                IShoppingCartBehavior shoppingCartBehavior,
+                IProductBehavior productBehavior,
                 IMapper mapper
             )
         {
@@ -45,7 +55,10 @@ namespace CampiShopAPI.Controllers
             _shoppingCartQueries = shoppingCartQueries;
             _userQueries = userQueries;
             _stateOrderQueries = stateOrderQueries;
+            _productQueries = productQueries;
             _detailOrderBehavior = detailOrderBehavior;
+            _shoppingCartBehavior = shoppingCartBehavior;
+            _productBehavior = productBehavior;
             _behavior = behavior;
             _mapper = mapper;
         }
@@ -86,6 +99,12 @@ namespace CampiShopAPI.Controllers
 
             // Validation of resources
 
+            var existingUser = await _userQueries.FindByUsernameAsync(createDetailOrderCommand.createOrderCommand.Username);
+
+            if (existingUser == null) return NotFound("The user doesn't exist");
+
+            double totalOrder = 0;
+
             for (int i = 0; i < createDetailOrderCommand.shoppingCarts.Count; i++)
             {
                 var shoppingCartId = createDetailOrderCommand.shoppingCarts[i];
@@ -96,11 +115,23 @@ namespace CampiShopAPI.Controllers
                 {
                     return NotFound("One or more of the shopping carts doesn't exist");
                 }
+
+                // Calculate the total of the order
+
+                totalOrder += existingShoppingCart.Total;
+
+                // Validation if the product of the shoppingCart has enough amount according to the shoppinCart amount.
+
+                var existingProduct = await _productQueries.FindByIdAsync(existingShoppingCart.ProductId);
+
+                if (existingProduct == null) return NotFound("The product doesn't exist");
+
+                if (!Validations.IsPossibleToBuy(existingProduct, existingShoppingCart)) return BadRequest("There is no enough amount of some product to buy");
             }
 
-            var existingUser = await _userQueries.FindByUsernameAsync(createDetailOrderCommand.createOrderCommand.Username);
+            // Verify if the Totals are the same
 
-            if (existingUser == null) return NotFound("The user doesn't exist");
+            if (totalOrder != createDetailOrderCommand.createOrderCommand.Total) return BadRequest("The total of the order is wrong");
 
             // Creating the order
 
@@ -114,12 +145,26 @@ namespace CampiShopAPI.Controllers
             {
                 var shoppingCartId = createDetailOrderCommand.shoppingCarts[i];
 
-                var shoppingCart = await _shoppingCartQueries.FindByIdAsync(shoppingCartId);
+                var shoppingCartViewModel = await _shoppingCartQueries.FindByIdAsync(shoppingCartId);
+                var productViewModel = await _productQueries.FindByIdAsync(shoppingCartViewModel.ProductId);
 
-                var productId = shoppingCart.ProductId;
+                Product product = _mapper.Map<Product>(productViewModel);
+                ShoppingCart shoppingCart = _mapper.Map<ShoppingCart>(shoppingCartViewModel);
+
+                var productId = product.Id;
                 var orderId = order.Id;
                 var amount = shoppingCart.Amount;
                 var total = shoppingCart.Total;
+
+                // Discount amount of a product
+
+                await _productBehavior.UpdateAmountProductAsync(product, amount);
+
+                // Delete shoppingCart register
+
+                await _shoppingCartBehavior.DeleteShoppingCartAsync(shoppingCart);
+
+                // Create detailOrder
 
                 await _detailOrderBehavior.CreateDetailOrderAsync(productId, orderId, amount, total);
             }

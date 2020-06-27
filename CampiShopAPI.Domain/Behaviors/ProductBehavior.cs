@@ -37,6 +37,15 @@ namespace CampiShopAPI.Domain.Behaviors
             await _repository.UpdateProductAsync(product);
         }
 
+        public async Task UpdateAmountProductAsync(Product product, int amount)
+        {
+            if (product is null) throw new ArgumentNullException(nameof(product));
+
+            product.Amount -= amount;
+
+            await _repository.UpdateProductAsync(product);
+        }
+
         public async Task DeleteProductAsync(Product product)
         {
             if (product is null) throw new ArgumentNullException(nameof(product));
