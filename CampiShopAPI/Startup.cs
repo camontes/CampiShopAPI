@@ -32,6 +32,8 @@ namespace CampiShopAPI
 
         public IConfiguration Configuration { get; }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -40,6 +42,15 @@ namespace CampiShopAPI
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 serverOptions => serverOptions.MigrationsAssembly("CampiShopAPI"))
             );
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             // Add Automapper
             services.AddAutoMapper(typeof(Startup));
@@ -120,6 +131,8 @@ namespace CampiShopAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseRouting();
 
