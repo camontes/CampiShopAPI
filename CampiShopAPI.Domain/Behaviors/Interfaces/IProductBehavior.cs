@@ -10,6 +10,7 @@ namespace CampiShopAPI.Domain.Behaviors.Interfaces
     {
         Task CreateProductAsync(Product product);
         Task UpdateProductAsync(Product product);
+        Task UpdateAmountProductAsync(Product product, int amount);
         Task DeleteProductAsync(Product product);
     }
 }

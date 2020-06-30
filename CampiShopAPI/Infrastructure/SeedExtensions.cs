@@ -22,26 +22,21 @@ namespace CampiShopAPI.Infrastructure
 			new StateOrder
 			{
 				Id = 1,
-				Name = "En proceso"
-			},
-			new StateOrder
-			{
-				Id = 2,
 				Name = "Pendiente"
 			},
 			new StateOrder
 			{
-				Id = 3,
+				Id = 2,
 				Name = "Recibido"
 			},
 			new StateOrder
 			{
-				Id = 4,
+				Id = 3,
 				Name = "Despachado"
 			},
 			new StateOrder
 			{
-				Id = 5,
+				Id = 4,
 				Name = "Entregado"
 			}
 		};
