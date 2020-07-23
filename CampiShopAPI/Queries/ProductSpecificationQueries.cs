@@ -27,10 +27,20 @@ namespace CampiShopAPI.Queries
                 {
                     Id = ps.Id,
                     ProductId = ps.ProductId,
-                    DetailSpecificationId = ps.DetailSpecificationId,
                     ProductName = ps.Product.Name,
+                    ProductPrice = ps.Product.Price,
+                    ProductDescription = ps.Product.Description,
+                    ProductAmount = ps.Product.Amount,
+                    ProductColor = ps.Product.Color,
+                    ProductPhoto = ps.Product.Photo,
+                    ProductCreatedAt = ps.Product.CreatedAt,
+                    ProductUpdatedAt = ps.Product.UpdatedAt,
+                    CategoryId = ps.DetailSpecification.Specification.CategoryId,
+                    CategoryName = ps.DetailSpecification.Specification.Category.Name,
+                    DetailSpecificationId = ps.DetailSpecificationId,
                     DetailSpecificationName = ps.DetailSpecification.Name,
-                    SpecificationName = ps.DetailSpecification.Specification.Name
+                    SpecificationName = ps.DetailSpecification.Specification.Name,
+                    SpecificationId = ps.DetailSpecification.Specification.Id
                 })
                 .ToListAsync();
         }
