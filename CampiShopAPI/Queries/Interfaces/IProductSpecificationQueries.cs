@@ -9,5 +9,6 @@ namespace CampiShopAPI.Queries.Interfaces
     public interface IProductSpecificationQueries
     {
         Task<List<ProductSpecificationViewModel>> FindAllAsync();
+        Task<List<DetailSpecificationProductViewModel>> FindAllByProductIdAsync(int productId);
     }
 }

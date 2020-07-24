@@ -44,5 +44,22 @@ namespace CampiShopAPI.Queries
                 })
                 .ToListAsync();
         }
+        public async Task<List<DetailSpecificationProductViewModel>> FindAllByProductIdAsync(int productId)
+        {
+            return await _context.ProductSpecifications.AsNoTracking()
+                .Include(p => p.Product)
+                .Include(d => d.DetailSpecification)
+                .Select(ps => new DetailSpecificationProductViewModel
+                {
+                    Id = ps.Id,
+                    ProductId = ps.ProductId,
+                    DetailSpecificationId = ps.DetailSpecificationId,
+                    DetailSpecificationName = ps.DetailSpecification.Name,
+                    SpecificationName = ps.DetailSpecification.Specification.Name,
+                    SpecificationId = ps.DetailSpecification.Specification.Id
+                })
+                .Where(productSpecification => productSpecification.ProductId == productId)
+                .ToListAsync();
+        }
     }
 }
