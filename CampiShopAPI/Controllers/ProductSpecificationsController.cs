@@ -35,11 +35,11 @@ namespace CampiShopAPI.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<ProductSpecificationViewModel>>> GetAllAsync()
         {
-            List<ProductSpecificationViewModel> productSpecifications = await _queries.FindAllAsync();
+            //List<ProductSpecificationViewModel> productSpecifications = await _queries.FindAllAsync();
 
-            List<ProductSpecificationViewModel> products = productSpecifications.Distinct(new ProductIdComparer()).ToList();
+           // List<ProductSpecificationViewModel> products = productSpecifications.Distinct(new ProductIdComparer()).ToList();
 
-            return products;
+            return await _queries.FindAllAsync(); ;
         }
 
         [Route("GetByProductId/{productId}")]
