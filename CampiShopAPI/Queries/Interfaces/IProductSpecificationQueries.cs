@@ -10,5 +10,6 @@ namespace CampiShopAPI.Queries.Interfaces
     {
         Task<List<ProductSpecificationViewModel>> FindAllAsync();
         Task<List<DetailSpecificationProductViewModel>> FindAllByProductIdAsync(int productId);
+        Task<ProductCategoryViewModel> FindByCategoryAsync(int productId);
     }
 }

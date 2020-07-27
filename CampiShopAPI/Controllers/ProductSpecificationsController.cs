@@ -33,13 +33,43 @@ namespace CampiShopAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<ProductSpecificationViewModel>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<ProductDetailSpecifications>>> GetAllAsync()
         {
-            //List<ProductSpecificationViewModel> productSpecifications = await _queries.FindAllAsync();
+            List<ProductDetailSpecifications> productDetailSpecifications = new List<ProductDetailSpecifications>();
+            List<ProductViewModel> products = await _productQueries.FindAllAsync();
 
-           // List<ProductSpecificationViewModel> products = productSpecifications.Distinct(new ProductIdComparer()).ToList();
+            for (int i = 0; i < products.Count; i++)
+            {
+                ProductDetailSpecifications productSpecifications = new ProductDetailSpecifications();
 
-            return await _queries.FindAllAsync(); ;
+                productSpecifications.ProductId = products[i].Id;
+                productSpecifications.ProductName = products[i].Name;
+                productSpecifications.ProductPrice = products[i].Price;
+                productSpecifications.ProductDescription = products[i].Description;
+                productSpecifications.ProductAmount = products[i].Amount;
+                productSpecifications.ProductColor = products[i].Color;
+                productSpecifications.ProductPhoto = products[i].Photo;
+                productSpecifications.ProductCreatedAt = products[i].CreatedAt;
+                productSpecifications.ProductUpdatedAt = products[i].UpdatedAt;
+
+                var category = await _queries.FindByCategoryAsync(products[0].Id);
+                productSpecifications.CategoryId = category.CategoryId;
+                productSpecifications.CategoryName = category.CategoryName;
+
+                //Get all specifications by product
+                List<DetailSpecificationProductViewModel> productDetails = await _queries.FindAllByProductIdAsync(products[i].Id);
+                //productSpecifications.Specifications = productDetails;
+                productSpecifications.detailSpecificationsId = new List<int>();
+                for (int j = 0; j < productDetails.Count; j++)
+                {
+                    productSpecifications.detailSpecificationsId.Add(productDetails[j].DetailSpecificationId);
+                }
+
+                productDetailSpecifications.Add(productSpecifications);
+            }
+
+            return productDetailSpecifications;
+
         }
 
         [Route("GetByProductId/{productId}")]
@@ -57,5 +87,19 @@ namespace CampiShopAPI.Controllers
             return await _queries.FindAllByProductIdAsync(productId);
         }
 
+        [Route("GetProductCategory/{productId}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ProductCategoryViewModel>> GetByCategoryAsync(int productId)
+        {
+            var existingProduct = await _productQueries.FindByIdAsync(productId);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            return await _queries.FindByCategoryAsync(productId);
+        }
     }
 }

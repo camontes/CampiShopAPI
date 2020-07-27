@@ -61,5 +61,18 @@ namespace CampiShopAPI.Queries
                 .Where(productSpecification => productSpecification.ProductId == productId)
                 .ToListAsync();
         }
+        public async Task<ProductCategoryViewModel> FindByCategoryAsync(int productId)
+        {
+            return await _context.ProductSpecifications.AsNoTracking()
+                .Include(d => d.DetailSpecification)
+                .Select(ps => new ProductCategoryViewModel
+                {
+                    ProductId = ps.ProductId,
+                    CategoryId = ps.DetailSpecification.Specification.CategoryId,
+                    CategoryName = ps.DetailSpecification.Specification.Category.Name
+                })
+                .Where(productSpecification => productSpecification.ProductId == productId)
+                .FirstOrDefaultAsync();
+        }
     }
 }
