@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CampiShopAPI.ViewModels
 {
-    public class ProductDetailSpecifications
+    public class ProductDetailSpecificationViewModel
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }

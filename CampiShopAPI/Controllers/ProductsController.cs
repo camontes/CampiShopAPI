@@ -84,7 +84,7 @@ namespace CampiShopAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ProductSpecificationViewModel>> CreateProductAsync(CreateProductSpecificationCommand createProductSpecificationCommand)
+        public async Task<ActionResult<ProductDetailSpecificationViewModel>> CreateProductAsync(CreateProductSpecificationCommand createProductSpecificationCommand)
         {
             if (createProductSpecificationCommand.detailSpecifications.Count == 0)
             {
@@ -120,9 +120,11 @@ namespace CampiShopAPI.Controllers
                 await _productSpecificationbehavior.CreateProductSpecificationAsync(productId, detailSpecificationId);
             }
 
-            var productViewModel = await _productSpecificationsqueries.FindByProductIdAsync(product.Id);
+            var productSpecificationViewModel = await _productSpecificationsqueries.FindByProductIdAsync(product.Id);
+            var productDetailSpecifications = _mapper.Map<ProductDetailSpecificationViewModel>(productSpecificationViewModel);
+            productDetailSpecifications.detailSpecificationsId = createProductSpecificationCommand.detailSpecifications;
 
-            return productViewModel;
+            return productDetailSpecifications;
         }
 
         [Route("SavePhoto")]
@@ -131,7 +133,7 @@ namespace CampiShopAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<string>> SaveCoursePhotoAsync(IFormFile photo)
+        public async Task<ActionResult<string>> SaveProductPhotoAsync(IFormFile photo)
         {
             if (photo != null && photo.Length > 0)
             {
