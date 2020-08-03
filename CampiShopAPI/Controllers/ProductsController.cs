@@ -136,7 +136,9 @@ namespace CampiShopAPI.Controllers
             if (photo != null && photo.Length > 0)
             {
                 var imagePath = @"/Images/Products/";
-                var uploadPath = "C:\\Users\\juanCarlos\\source\\repos\\CampiShopWeb\\public" + imagePath;
+                // var uploadPath = "C:\\Users\\juanCarlos\\source\\repos\\CampiShopWeb\\public" + imagePath;
+                var uploadPath = "C:\\Users\\camil\\Documents\\Repos\\CampiShopWeb\\public" + imagePath;
+            
 
                 //Create Directory
                 if (!Directory.Exists(uploadPath))
