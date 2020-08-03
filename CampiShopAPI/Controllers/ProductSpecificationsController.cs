@@ -33,14 +33,14 @@ namespace CampiShopAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<ProductDetailSpecifications>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<ProductDetailSpecificationViewModel>>> GetAllAsync()
         {
-            List<ProductDetailSpecifications> productDetailSpecifications = new List<ProductDetailSpecifications>();
+            List<ProductDetailSpecificationViewModel> productDetailSpecifications = new List<ProductDetailSpecificationViewModel>();
             List<ProductViewModel> products = await _productQueries.FindAllAsync();
 
             for (int i = 0; i < products.Count; i++)
             {
-                ProductDetailSpecifications productSpecifications = new ProductDetailSpecifications();
+                ProductDetailSpecificationViewModel productSpecifications = new ProductDetailSpecificationViewModel();
 
                 productSpecifications.ProductId = products[i].Id;
                 productSpecifications.ProductName = products[i].Name;
