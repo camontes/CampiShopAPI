@@ -4,14 +4,16 @@ using CampiShopAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CampiShopAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200731145208_Add CategoriesSeed")]
+    partial class AddCategoriesSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,34 +48,34 @@ namespace CampiShopAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 922, DateTimeKind.Local).AddTicks(5130),
+                            CreatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 717, DateTimeKind.Local).AddTicks(3218),
                             Description = "Here you can find all about computers",
                             Name = "Computers",
-                            UpdatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(1929)
+                            UpdatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 717, DateTimeKind.Local).AddTicks(9806)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(2324),
+                            CreatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 718, DateTimeKind.Local).AddTicks(172),
                             Description = "Here you can find all about TV's",
                             Name = "TV's",
-                            UpdatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(2333)
+                            UpdatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 718, DateTimeKind.Local).AddTicks(180)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(2339),
+                            CreatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 718, DateTimeKind.Local).AddTicks(187),
                             Description = "Here you can find all about videogames",
                             Name = "Videogames",
-                            UpdatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(2340)
+                            UpdatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 718, DateTimeKind.Local).AddTicks(188)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(2342),
+                            CreatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 718, DateTimeKind.Local).AddTicks(190),
                             Description = "Here you can find all about cell phones",
-                            Name = "Cellphones",
-                            UpdatedAt = new DateTime(2020, 7, 31, 13, 54, 59, 923, DateTimeKind.Local).AddTicks(2343)
+                            Name = "Cell phones",
+                            UpdatedAt = new DateTime(2020, 7, 31, 9, 52, 7, 718, DateTimeKind.Local).AddTicks(191)
                         });
                 });
 

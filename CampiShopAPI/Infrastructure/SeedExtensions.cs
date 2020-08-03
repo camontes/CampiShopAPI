@@ -18,6 +18,41 @@ namespace CampiShopAPI.Infrastructure
             }
         };
 
+		public static readonly Category[] CategoriesSeed = new Category[] {
+			new Category
+			{
+				Id = 1,
+				Name="Computers",
+				Description="Here you can find all about computers",
+				CreatedAt=DateTime.Now,
+				UpdatedAt=DateTime.Now				
+			},
+			new Category
+			{
+				Id = 2,
+				Name="TV's",
+				Description="Here you can find all about TV's",
+				CreatedAt=DateTime.Now,
+				UpdatedAt=DateTime.Now
+			},
+			new Category
+			{
+				Id = 3,
+				Name="Videogames",
+				Description="Here you can find all about videogames",
+				CreatedAt=DateTime.Now,
+				UpdatedAt=DateTime.Now
+			},
+			new Category
+			{
+				Id = 4,
+				Name="Cellphones",
+				Description="Here you can find all about cell phones",
+				CreatedAt=DateTime.Now,
+				UpdatedAt=DateTime.Now
+			}
+		};
+
 		public static readonly StateOrder[] StateOrdersSeed = new StateOrder[] {
 			new StateOrder
 			{
@@ -48,6 +83,9 @@ namespace CampiShopAPI.Infrastructure
             );
 			modelBuilder.Entity<StateOrder>().HasData(
 			   StateOrdersSeed
+			);
+			modelBuilder.Entity<Category>().HasData(
+			   CategoriesSeed
 			);
 		}
     }
